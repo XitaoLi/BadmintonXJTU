@@ -1,0 +1,15 @@
+{
+  "username":"****",
+  "pwd":"******",
+  "searchPwd":"******",
+  "priority":["19","18","20","10","11","15","16","09"],
+  "emailConfig":[
+    {
+      "from":"******@qq.com",
+      "to":"*****@qq.com",
+      "smtpServer":"smtp.qq.com",
+      "port":"****",
+      "AuthorizationCode":"******"
+    }
+  ]
+}
