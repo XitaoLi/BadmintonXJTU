@@ -1,16 +1,20 @@
+## 项目说明
+本项目可实现西安交通大学兴庆校区羽毛球场馆的预约，提供全局扫描以及定时抢场两种功能。
+
+This project can reserve badminton venues in Xingqing Campus of XJTU, and provide two basic functions: global scanning and timing competition.
+
 ## 环境
 项目依赖库已打包好，执行`pip install -r requirements.txt`可快速添加依赖项
-ocr识别中，除了需要安装python库pytesseract外，还需要另外下载tesseract程序并添加环境变量[win下载地址](https://digi.bib.uni-mannheim.de/tesseract/)，并在[line2](./project/main/yzm/ocr.py) 修改tesseract.exe所在的文件路径,linux下无需修改
 
 ## 参数设置
-主程序入口为 [threat](BadmintonXJTU/project/main/thread.py)，提供三种功能：
+主程序入口为 [threat](project/main/thread.py)，提供三种功能：
 1. mode = 0 全局扫描  
 2. mode = 1 抢场（只查看第五天场地） 
-3. mode=2  单日扫描,指定场地
+3. mode = 2  单日扫描,指定场地
 
-可在threat user parameter中更改可选项。或者在PlayBadminton.py中进行更为详细的设置。
+可在`threat->user->parameter`中更改可选项。或者在[PlayBadminton.py](project/main/PlayBadminton.py)中进行更为详细的设置。
 
-新建文件./docs/user_config.json，并按以下格式填写帐密、查询密码、预约偏好等信息，此部分涉及敏感信息并未上传云端
+在文件[user_config.json](docs/user_config.json)，并按以下格式填写帐密、查询密码、预约偏好等信息，此部分涉及敏感信息并未上传云端
 ```json
 //文件不能有中文注释,此处注释只为帮助规范数据格式
 {
@@ -34,9 +38,10 @@ ocr识别中，除了需要安装python库pytesseract外，还需要另外下载
  Linux 执行``nohup python -u BadmintonXJTU/project/main/thread.py >> my.log 2>&1 &``即可后台运行
 
 ## 分支说明
-- 默认为linux-release版本，需要部署在服务器上
-- dev基于网页版接口，但2022.9版本由于学校接口变更，该版本已废弃
-- mobiledev基于移动端接口，注意程序运行期间需要确保userToken不变，因此程序运行后手机端需要重新登录
+- **Linux版本**：推荐使用linux-release分支，需要部署在服务器上
+- **Win版本**：mobiledev分支基于移动端接口，注意程序运行期间需要确保userToken不变，因此程序运行后手机端需要重新登录（Win版本需要电脑24小时不停机，由于实用性问题已放弃维护）
+- dev分支基于网页版接口，但2022.9版本由于学校接口变更，该版本已废弃
+
 
 ## 文件地图
 ```bash

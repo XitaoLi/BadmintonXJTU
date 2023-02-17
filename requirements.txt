@@ -1,9 +1,6 @@
-numpy==1.21.6
-opencv_python==4.6.0.66
-Pillow==9.2.0
-pycryptodome==3.15.0
-PyExecJS==1.5.1
-pytesseract==0.3.9
-requests==2.20.0
-schedule==1.1.0
-soupsieve==2.3.2.post1
+numpy
+opencv_python
+Pillow
+pycryptodome
+requests
+schedule

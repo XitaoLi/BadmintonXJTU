@@ -4,7 +4,7 @@ project/main/yzm/imageProcessed/
 test/
 
 note.md
-user_config.json
+.docs/user_config.json
 *.jpg
 
 .saz
