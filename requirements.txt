@@ -4,3 +4,4 @@ Pillow
 pycryptodome
 requests
 schedule
+pytz

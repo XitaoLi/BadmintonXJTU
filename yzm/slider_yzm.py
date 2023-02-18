@@ -2,9 +2,10 @@
 import datetime
 import random
 import cv2
-
+import time
+import pytz
 operate_time = 2023 #milliseconds
-
+tz = pytz.timezone('Asia/Shanghai') 
 def identify_gap(bg,tp):
     '''
     bg: 背景图片
@@ -26,13 +27,13 @@ def identify_gap(bg,tp):
     return tl[0]
 
 
-def build_track():
+def build_track(k):
     real_start_time = 170
     tracklist = [{"x":0,"y":0,"type":"down","t":real_start_time}]
 
     # The function of y with respect to x is: y = 0.1 x + int(2*random()-1)
     # The function of x with respect to t is: x = a*(t-b)^2 +c
-    xm = identify_gap('resource/bgImg.png','resource/sliderImg.png')
+    xm = int(identify_gap('yzm/img/bgImg.png','yzm/img/sliderImg.png') * k)
     tm = operate_time
     a = - xm/tm**2
     for t in range(real_start_time,tm,21):
@@ -42,8 +43,8 @@ def build_track():
     tracklist[-1]["type"] = "up"
     # print(tracklist)
     return tracklist
-def build_post():
-    now_time = datetime.datetime.now()
+def build_post(k):
+    now_time = datetime.datetime.fromtimestamp(int(time.time()), tz)
     start_time = now_time - datetime.timedelta(microseconds = operate_time*1000)
     start_slide_time = start_time.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] +'Z'
     end_slide_time = now_time.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] +'Z'
@@ -54,7 +55,8 @@ def build_post():
         "sliderImageHeight": 159,
         "startSlidingTime": start_slide_time,
         "entSlidingTime": end_slide_time,
-        "trackList":build_track
+        "trackList":build_track(k)
     }
-    sync = f"synjones{id}synjoneshttp://202.117.17.144:8071"
+    # print(data)
     return data
+

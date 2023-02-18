@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 #coding:utf-8
+import base64
 import datetime
 from email.mime.text import MIMEText
 import json
@@ -7,34 +8,20 @@ import re
 import smtplib
 import time
 from random import random
+import traceback
 import requests
 import os
 import pytz as pytz
-
 from yzm.slider_yzm import build_post
 from SpiderAgency import ua_change
-
-def getTime(mode):
-    utc_now = datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc)
-    SHA_TZ = datetime.timezone(
-        datetime.timedelta(hours=8),
-        name='Asia/Shanghai',
-    )
-    # 北京时间
-    beijing_now = utc_now.astimezone(SHA_TZ)
-    fmt = '%Y-%m-%d %H:%M:%S'
-    now_fmt =beijing_now.strftime(fmt)
-    if mode == 0:
-        return now_fmt[:10]
-    else:
-        return now_fmt[11:]  
-
+import logging
+import globalLogger
 tz = pytz.timezone('Asia/Shanghai') 
+
 def userInfoRead():
     current_path = os.getcwd()
-    with open(current_path + '/BadmintonXJTU/docs/user_config.json','r') as f:
-      data = json.loads(f.read(),)
-      return data
+    with open(current_path + '/docs/user_config.json','r') as f:
+      return json.load(f)
 
 def email(text:str,info:dict):
     '''使用stmp邮箱服务发送邮件
@@ -46,7 +33,7 @@ def email(text:str,info:dict):
     info[4]:授权密码而非账户密码
     '''
     msg = MIMEText(text, 'plain', 'utf-8')
-    msg_From = info["from"];
+    msg_From = info["from"]
     msg_To = info["to"]
     smtpSever = info["smtpServer"]
     smtpPort = info["port"]
@@ -62,7 +49,6 @@ def email(text:str,info:dict):
     smtp.connect(smtpSever, smtpPort)
     smtp.login(msg_From, sqm)
     smtp.sendmail(msg_From, msg_To, str(msg))
-    print("email已发送")
     smtp.quit()
 
 class YiDongJiaoDa(object):
@@ -72,15 +58,16 @@ class YiDongJiaoDa(object):
         PlatFlag: '41' 一楼 '42'三楼
         date：要预定的日期，格式为2022-06-11
         '''
-        self.username = username;
-        self.passward = passward;
-        self.session = requests.session();
-        # self.session.keep_alive = False;
-        self.session.headers['User-Agent'] = ua_change();
-        print('随机配置UA信息',self.session.headers['User-Agent'])
+        self.username = username
+        self.passward = passward
+        self.session = requests.session()
+        # self.session.keep_alive = False
+        self.session.headers['User-Agent'] = ua_change()
+        globalLogger.logger.info("Random select UA header:%s",self.session.headers['User-Agent'])
+        # print('随机配置UA信息',self.session.headers['User-Agent'])
         #41 一楼 42 三楼
         self.platid = PlatFlag
-        self.allplat = {};
+        self.allplat = {}
         self.userToken = ''
         
         # if date == '':
@@ -121,9 +108,10 @@ class YiDongJiaoDa(object):
             return e
 
     def login_again(self):
+        """待机时间过长会有一个再次验证的过程"""
         url = 'http://org.xjtu.edu.cn/openplatform/toon/private/userLoginByToken'
         data={"userToken":self.userToken}
-        self.session.post(url,json=data);
+        self.session.post(url,json=data)
 
         url = "http://org.xjtu.edu.cn/openplatform/toon/auth/generateTicket"
         params = {
@@ -136,7 +124,6 @@ class YiDongJiaoDa(object):
         ticket = json.loads(r.text)['data']['ticket']
         return ticket
 
-    
     def search(self,mode):
         '''
         mode = 0 全局扫描  mode = 1 单日查询（只查看第五天场地） mode=2 单日查询,指定场地
@@ -159,49 +146,51 @@ class YiDongJiaoDa(object):
         if r.status_code==200:
             t = datetime.datetime.fromtimestamp(int(time.time()), tz).strftime('%Y-%m-%d %H:%M:%S %Z%z')
 
-            print(f"欢迎进入体育场馆预定系统{t}")
+            globalLogger.logger.info(f"Welcome to the reservation system.{t}")
 
-        #返回值为html有可用信息
-        url_BMT1 = 'http://202.117.17.144/product/show.html?id=' +self.platid;
-        r = self.session.get(url_BMT1);
-        print("id=",self.platid,r.status_code);
+        #返回值为html，有可用信息
+        url_BMT1 = 'http://202.117.17.144/product/show.html?id=' +self.platid
+        r = self.session.get(url_BMT1)
+        globalLogger.logger.debug(f"id={self.platid} {r.status_code}")
 
         #-----------------------------获取场地信息-------------------------------
         #五天的全部场地信息，用字典存储
-        AllPlatTable = {};
+        AllPlatTable = {}
         today = datetime.datetime.fromtimestamp(int(time.time()), tz).today()
 
-        start  = 0 if mode == 0 else 4;
+        start  = 0 if mode == 0 else 4
         for i in  range(start,5):
             tomorrow = today + datetime.timedelta(days=i)
             date = tomorrow.strftime("%Y-%m-%d")
             if mode == 2:
                 if self.date == '':
-                    print('请指定日期')
+                    globalLogger.logger.error("No special day appointed in mode 2.")
                     return 
                 else:
                     date = self.date
-            t =int(round(time.time()*1000));
+            t =int(round(time.time()*1000))
             param = {
                 's_date': date,
                 'serviceid': self.platid
             }
-            url_getokinfo= 'http://202.117.17.144:8080/web/product/findOkArea.html';
+            url_getokinfo= 'http://202.117.17.144:8080/web/product/findOkArea.html'
             # http://202.117.17.144/product/findOkArea.html
             r = self.session.get(url_getokinfo,params=param,allow_redirects=False)
     
-            content = r.text;
-            pattern = r'"id":([0-9]+).*?"sname":"(场地[\d]+).*?"status":([\d]).*?"time_no":"([0-9:-]+).*?"stockid":([0-9:-]+)';
+            content = r.text
+            pattern = r'"id":([0-9]+).*?"sname":"(场地[\d]+).*?"status":([\d]).*?"time_no":"([0-9:-]+).*?"stockid":([0-9:-]+)'
             plat = re.findall(pattern,content,re.S)
-            print(date,'可选场地信息:')
-            PlatTable = [];                              #收集某一天的全部空场信息
+            PlatTable = []                              #收集某一天的全部空场信息
             for i in plat:
                 if(i[2]=='1'):
                     print(i)
                     PlatTable.append(i)
             if not PlatTable:
-                print('无空余场地')
-            AllPlatTable[date] = PlatTable;   
+                globalLogger.logger.info(f"date:{date} No court available.")
+            else:
+                tmp_str = "\n".join([str(x) for x in PlatTable])
+                globalLogger.logger.info(f"date:{date} selectable courts:\n{tmp_str}")
+            AllPlatTable[date] = PlatTable   
 
         self.allplat = AllPlatTable
 
@@ -252,53 +241,67 @@ class YiDongJiaoDa(object):
         selectplat 选择的场地
         InfoList 为邮箱配置的端口密码等
         '''
-        print("正在预定,请稍后…………")
+        # print("正在预定,请稍后…………")
         if not selectplat:
-            print("无符合条件的场地")
+            globalLogger.logger.info("No courts meet the requirement.")
             return 0,'null','null'
         #--------------------------------------------------
-        # self.login_again();
-        for i in range(0,11):
-            num = str(random());
-            url_yzm ='http://202.117.17.144:8080/web/login/yzm.html?' + num;
-            r = self.session.get(url_yzm)
-            if r.status_code == '404':
-                return -1,'yzm请求有误'
-            current_path = os.getcwd()
-            with open(current_path + '/BadmintonXJTU/project/main/yzm/image/yzm'+thread_id+'.jpg','wb') as f:
-                f.write(r.content)
-            yzm = ocr(current_path + '/BadmintonXJTU/project/main/yzm/image/yzm'+thread_id+'.jpg',5,3)
-            if len(yzm) != 4:
-                continue
+        # self.login_again()
+        for i in range(0,3):
 
-            url_tobook = 'http://202.117.17.144:8080/web/order/tobook.html';
+            # get figure
+            url_yzm ="http://202.117.17.144:8080/gen"
+            r = self.session.get(url_yzm)
+            response_json = r.json()
+            start_idx = len("data:image/jpeg;base64,")
+            backgroundImage = response_json["captcha"]["backgroundImage"][start_idx:]
+            bgImg = base64.b64decode(backgroundImage)
+            str = time.asctime()
+            with open("yzm/img/bgImg.png",'wb') as f:
+                f.write(bgImg)
+            start_idx = len("data:image/png;base64,")
+            sliderImage = response_json["captcha"]["sliderImage"][start_idx:]
+            sldImg = base64.b64decode(sliderImage)
+            with open("yzm/img/sliderImg.png",'wb') as f:
+                f.write(sldImg)
+            
+            id = response_json["id"]
+            k = 260 / response_json["captcha"]["backgroundImageWidth"]  #260为手机屏幕显示像素
+            yzm = json.dumps(build_post(k)) + f"synjones{id}synjoneshttp://202.117.17.144:8071"
+            url_tobook = 'http://202.117.17.144:8080/web/order/tobook.html'
             data = {
-                'param': json.dumps({
+                "param": json.dumps({
                     "stockdetail": {
                         selectplat[4]: selectplat[0]
                     }, 
-                    "yzm":yzm,
-                    "address":self.platid}).replace(' ',''),
-                'json':'true'
+                    "venueReason":"","fileUrl":"","remark":"",
+                    "address":self.platid}),
+                "yzm":yzm,
+                "json":'true'
             }
-            headers ={'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'};
-            r = self.session.post(url_tobook,data=data,allow_redirects=False);
-            print(r.text)
+            r = self.session.post(url_tobook,data=data,allow_redirects=False)
+            globalLogger.logger.debug(r.text)
             if r.status_code == '404':
-                print('404错误')
+                globalLogger.logger.error('404 error')
             msg = json.loads(r.text)['message']
             if msg == '验证码错误':
+                globalLogger.logger.info("Retry slider auth code recognition.")
                 continue
+                
             elif msg == "USERNOTLOGINYET":
                 self.login()
+            elif "已过有效期" in msg:
+                globalLogger.logger.error("Auth code is out of validity.")
+                pass
             elif msg == '未支付':
                 orderId = json.loads(r.text)['object']['order']['orderid']
-                print('预定成功')
+                globalLogger.logger.info("Successful for reservation.")
                 if isEmail and InfoList:
                     platName = '  一楼  'if(self.platid =='41')else'  三楼 '
                     email_inf = '您的羽毛球场预约小助手已为您预约成功了\n场地信息:\n'+ \
-                        selectplat[-1] + platName +selectplat[1] + '  ' + selectplat[3];
+                        selectplat[-1] + platName +selectplat[1] + '  ' + selectplat[3]
                     email(email_inf,InfoList[0])
+                    globalLogger.logger.info("Successful for sending the email.")
                 
                 return 1,orderId,selectplat[3][:2]     #True success
             else:
@@ -306,7 +309,7 @@ class YiDongJiaoDa(object):
         return 0,'null','null'
 
         # orderid = re.findall(r'"orderid":"([\d]*?)"',r.text)[0]
-        # print("orderid",orderid);
+        # print("orderid",orderid)
         # return orderid
 
     def buy(self,orderid,querypwd):
@@ -319,15 +322,15 @@ class YiDongJiaoDa(object):
             'orderid': orderid,
             'payid': '6'
         }
-        r =self.session.get(url_showpay,params=param);
+        r =self.session.get(url_showpay,params=param)
         # print("url_payplat",r.status_code)
 
         # tranamt account sno toaccount thirdsystem thirdorderid ordertype sign orderdesc praram1 thirdurl
         param_for_next = re.findall(r'name="(.*?)".*?value="(.*?)"',r.text)
-        data={};
+        data={}
         for p in param_for_next:
             data[p[0]] = p[1]
-        url_creatorder ='http://202.117.1.244:9001/Order/CreateOrder';
+        url_creatorder ='http://202.117.1.244:9001/Order/CreateOrder'
         r = self.session.post(url_creatorder,data=data)
         print("第三方支付系统已唤起",r.status_code)
         #得到信息中有orderid_2
@@ -350,10 +353,6 @@ class YiDongJiaoDa(object):
         else:
             return False
     
-def bmt_for_winmenu(un,pwd,platid,mode,date=''):
-    ydjd = YiDongJiaoDa(un,pwd,platid,date);
-    ydjd.search(mode);
-    return ydjd.allplat
 
 def bmt_for_thread(ydjd:YiDongJiaoDa, userInfo,mode,thread_id,isEmail):
     '''为线程创建的调用接口。
@@ -368,7 +367,7 @@ def bmt_for_thread(ydjd:YiDongJiaoDa, userInfo,mode,thread_id,isEmail):
         print(f"目标时间：{targetTime}")
         seconds = (targetTime-nowTime).seconds
         print(f"休眠时间：{seconds}s")
-        time.sleep(seconds);
+        time.sleep(seconds)
         circulation_num = 5
         plat_booked_num = 0
         while (circulation_num>0 and plat_booked_num<=2 ):
@@ -377,59 +376,66 @@ def bmt_for_thread(ydjd:YiDongJiaoDa, userInfo,mode,thread_id,isEmail):
                 selectplat = ydjd.select(userInfo['priority'],mode)
                 if selectplat:
                     ydjd.login_again()
-                    status,id,sTime = ydjd.book(isEmail,selectplat,userInfo['emailConfig'],thread_id);
+                    status,id,sTime = ydjd.book(isEmail,selectplat,userInfo['emailConfig'],thread_id)
                     if status == 1:
-                        plat_booked_num += 1;
+                        plat_booked_num += 1
                         userInfo['priority'].remove(sTime)
-                        ydjd.buy(id,userInfo['searchPwd']);
+                        ydjd.buy(id,userInfo['searchPwd'])
             except Exception as e:
-                print(e)
-            time.sleep(1);
-            circulation_num -= 1;
+                globalLogger.logger.error(e)
+                globalLogger.logger.error("\n" + traceback.format_exc())
+            time.sleep(1)
+            circulation_num -= 1
         return
     else:        
         #由于定时任务是相互独立的，在抢到一定数量的场地之后应当及时关停程序，否则会无休止地执行下去
-        # try:
-        ydjd.search(mode)
-        selectplat = ydjd.select(userInfo['priority'],mode)
-        print(selectplat)
-        if selectplat:
-            status,id = ydjd.book(True,selectplat,userInfo['emailConfig']);
-            if status == 1:
-                confirm = input("Input OK to buy: ")
-                if confirm == "OK":
-                    ydjd.buy(id);
-                    return True
-        # except Exception as e:
+        try:
+            ydjd.search(mode)
+            selectplat = ydjd.select(userInfo['priority'],mode)
+            globalLogger.logger.info(str(selectplat))
+            if selectplat:
+                status,id,_a = ydjd.book(True,selectplat,userInfo['emailConfig'])
+                if status == 1:
+                    confirm = input("Input OK to buy: ")
+                    if confirm == "OK":
+                        ydjd.buy(id)
+                        exit(0)
+                        return True
+        except Exception as e:
+            globalLogger.logger.error(e)
+            globalLogger.logger.error("\n" + traceback.format_exc())
+
         #     print(e)
         return False
 
 if __name__ == '__main__':
-    userInfo = userInfoRead();
+    ### 以下程序仅用来debug，真正的入口在thread程序里
+    globalLogger._init()
+    userInfo = userInfoRead()
     userInfo['priority'].remove("19")
     pass
-    ydjd = YiDongJiaoDa(userInfo['username'],userInfo['pwd'],'41');
+    ydjd = YiDongJiaoDa(userInfo['username'],userInfo['pwd'],'41')
 
     mode = 0
     ticket = ydjd.login()
-    print('ticket:',ticket)
+    # print('ticket:',ticket)
     if type(ticket) is not str:
-        exit(-1);
+        exit(-1)
 
-    ydjd.search(mode);
-    selectplat = ydjd.select(userInfo['priority'],mode)
-    print(selectplat)
-    id = ydjd.book(True,selectplat,userInfo['emailConfig']);
+    # ydjd.search(mode)
+    # selectplat = ydjd.select(userInfo['priority'],mode)
+    # print(selectplat)
+    # id = ydjd.book(True,selectplat,userInfo['emailConfig'])
 
     ydjd.platid = '42'
-    ydjd.search(mode);
+    ydjd.search(mode)
     selectplat = ydjd.select(userInfo['priority'],mode)
-    print(selectplat)
-    id = ydjd.book(True,selectplat,userInfo['emailConfig']);
+    # print(selectplat)
+    id = ydjd.book(True,selectplat,userInfo['emailConfig'])
     
 
     # if id != 'null':
-    #     ydjd.buy(id,userInfo['searchPwd']);
+    #     ydjd.buy(id,userInfo['searchPwd'])
 
     
    

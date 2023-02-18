@@ -2,25 +2,29 @@
 import copy
 import threading
 from time import sleep
+import datetime
 from PlayBadminton import *
 import schedule
+import logging
+
+import globalLogger
+
 def MainBook():
-    # def test():
-    #     print('rtest')
     userInfo = userInfoRead()
-    
-    # user parameter
-    mode = 1       #mode为2还需要在Line38传入指定日期
-    floor = '41'   #一楼'41' 三楼'43'
-    isEmail = True #是否发送邮件
+    globalLogger.logger.info("Finish loading user info.")
+
+    mode = userInfo["mode"]       #mode为2还需要在Line38传入指定日期
+    floor = userInfo["floor"]   #一楼'41' 三楼'43'
+    isEmail = userInfo["isEmail"] #是否发送邮件
+    date = userInfo["date"] # 格式为2023-2-19
     
     start_time = "08:39:00" #08:40:00
     # start_time = (datetime.datetime.now() + datetime.timedelta(seconds=2)).strftime('%H:%M:%S') 
-    if mode:
+    if mode == 1:
         sub_thread = []
         ydjd = YiDongJiaoDa(userInfo['username'],userInfo['pwd'],floor);
         for i in range(0,1):
-            print("正在注册线程",2*i+1,'--------------')
+            globalLogger.logger.info("Start registering for the thread %s.",2*i+1)
             sub_thread.append( threading.Thread(target = bmt_for_thread,args=(ydjd,userInfo,mode,str(i)+'-1',isEmail)) )
             # sub_thread.append( threading.Thread(target = bmt_for_thread,args=(ydjd2,userInfo,mode,str(i)+'-2')) )
             # sub_thread.append( threading.Thread(target = test) )
@@ -40,10 +44,11 @@ def MainBook():
         ydjd.login()
         ydjd2 = copy.deepcopy(ydjd)
         ydjd2.platid = '42'
-        schedule.every(120).seconds.do(bmt_for_thread,ydjd=ydjd,userInfo=userInfo,mode=mode,thread_id = '1-1',isEmail=isEmail)
-        schedule.every(120).seconds.do(bmt_for_thread,ydjd=ydjd2,userInfo=userInfo,mode=mode,thread_id = '1-2,',isEmail =isEmail )
+        schedule.every(5).seconds.do(bmt_for_thread,ydjd=ydjd,userInfo=userInfo,mode=mode,thread_id = '1-1',isEmail=isEmail)
+        schedule.every(120).seconds.do(bmt_for_thread,ydjd=ydjd2,userInfo=userInfo,mode=mode,thread_id = '1-2,',isEmail =isEmail)
         while 1:
             schedule.run_pending()
             sleep(1)
 if __name__ == "__main__":
+    globalLogger._init()
     MainBook()
