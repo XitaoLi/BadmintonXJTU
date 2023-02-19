@@ -1,0 +1,164 @@
+INFO:root:Finish loading user info.
+INFO:root:Random select UA header:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3
+2023-02-18 06:17:59,029 - PlayBadminton.py - INFO: Random select UA header:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5
+2023-02-18 06:18:01,946 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-18 14:18:01 CST+0800
+2023-02-18 06:18:03,133 - PlayBadminton.py - INFO: date:2023-02-18 selectable courts:[('2263939', '场地1', '1', '09:00-10:00', '216037'), ('2263950', '场地12', '1', '09:00-10:00', '216037'), ('2263940', '场地2', '1', '09:00-10:00', '216037'), ('2263942', '场地4', '1', '09:00-10:00', '216037'), ('2263943', '场地5', '1', '09:00-10:00', '216037'), ('2263944', '场地6', '1', '09:00-10:00', '216037'), ('2263945', '场地7', '1', '09:00-10:00', '216037'), ('2263946', '场地8', '1', '09:00-10:00', '216037'), ('2263947', '场地9', '1', '09:00-10:00', '216037')]
+2023-02-18 06:18:03,467 - PlayBadminton.py - INFO: date:2023-02-19 selectable courts:[('2264059', '场地1', '1', '09:00-10:00', '216047'), ('2264070', '场地12', '1', '09:00-10:00', '216047'), ('2264065', '场地7', '1', '09:00-10:00', '216047')]
+2023-02-18 06:18:03,766 - PlayBadminton.py - INFO: date:2023-02-20 No court available.
+2023-02-18 06:18:04,093 - PlayBadminton.py - INFO: date:2023-02-21 No court available.
+2023-02-18 06:18:04,421 - PlayBadminton.py - INFO: date:2023-02-22 No court available.
+2023-02-18 06:18:04,421 - PlayBadminton.py - INFO: No courts meet the requirement.
+2023-02-18 06:21:52,541 - PlayBadminton.py - INFO: Random select UA header:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6
+2023-02-18 06:21:55,668 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-18 14:21:55 CST+0800
+2023-02-18 06:21:56,677 - PlayBadminton.py - DEBUG: id=42 200
+2023-02-18 06:21:57,064 - PlayBadminton.py - INFO: date:2023-02-18 selectable courts:[('2263939', '场地1', '1', '09:00-10:00', '216037'), ('2263950', '场地12', '1', '09:00-10:00', '216037'), ('2263940', '场地2', '1', '09:00-10:00', '216037'), ('2263942', '场地4', '1', '09:00-10:00', '216037'), ('2263943', '场地5', '1', '09:00-10:00', '216037'), ('2263944', '场地6', '1', '09:00-10:00', '216037'), ('2263945', '场地7', '1', '09:00-10:00', '216037'), ('2263946', '场地8', '1', '09:00-10:00', '216037'), ('2263947', '场地9', '1', '09:00-10:00', '216037')]
+2023-02-18 06:21:57,452 - PlayBadminton.py - INFO: date:2023-02-19 selectable courts:[('2264059', '场地1', '1', '09:00-10:00', '216047'), ('2264070', '场地12', '1', '09:00-10:00', '216047'), ('2264065', '场地7', '1', '09:00-10:00', '216047')]
+2023-02-18 06:21:57,766 - PlayBadminton.py - INFO: date:2023-02-20 No court available.
+2023-02-18 06:21:58,101 - PlayBadminton.py - INFO: date:2023-02-21 No court available.
+2023-02-18 06:21:58,429 - PlayBadminton.py - INFO: date:2023-02-22 No court available.
+2023-02-18 06:21:58,429 - PlayBadminton.py - INFO: No courts meet the requirement.
+2023-02-18 06:25:13,021 - PlayBadminton.py - INFO: Random select UA header:Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24
+2023-02-18 06:25:15,394 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-18 14:25:15 CST+0800
+2023-02-18 06:25:16,171 - PlayBadminton.py - DEBUG: id=42 200
+2023-02-18 06:25:16,484 - PlayBadminton.py - INFO: date:2023-02-18 selectable courts:('2263939', '场地1', '1', '09:00-10:00', '216037')
+('2263950', '场地12', '1', '09:00-10:00', '216037')
+('2263940', '场地2', '1', '09:00-10:00', '216037')
+('2263942', '场地4', '1', '09:00-10:00', '216037')
+('2263943', '场地5', '1', '09:00-10:00', '216037')
+('2263944', '场地6', '1', '09:00-10:00', '216037')
+('2263945', '场地7', '1', '09:00-10:00', '216037')
+('2263946', '场地8', '1', '09:00-10:00', '216037')
+('2263947', '场地9', '1', '09:00-10:00', '216037')
+2023-02-18 06:25:16,798 - PlayBadminton.py - INFO: date:2023-02-19 selectable courts:('2264059', '场地1', '1', '09:00-10:00', '216047')
+('2264070', '场地12', '1', '09:00-10:00', '216047')
+('2264065', '场地7', '1', '09:00-10:00', '216047')
+2023-02-18 06:25:17,095 - PlayBadminton.py - INFO: date:2023-02-20 No court available.
+2023-02-18 06:25:17,407 - PlayBadminton.py - INFO: date:2023-02-21 No court available.
+2023-02-18 06:25:17,707 - PlayBadminton.py - INFO: date:2023-02-22 No court available.
+2023-02-18 06:25:17,707 - PlayBadminton.py - INFO: No courts meet the requirement.
+2023-02-18 06:25:52,175 - thread.py - INFO: Finish loading user info.
+2023-02-18 06:25:52,176 - PlayBadminton.py - INFO: Random select UA header:Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3
+2023-02-18 06:27:55,179 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-18 14:27:55 CST+0800
+2023-02-18 06:28:56,201 - thread.py - INFO: Finish loading user info.
+2023-02-18 06:28:56,202 - PlayBadminton.py - INFO: Random select UA header:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3
+2023-02-18 06:29:03,398 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-18 14:29:03 CST+0800
+2023-02-18 06:29:04,166 - PlayBadminton.py - DEBUG: id=41 200
+2023-02-18 06:29:04,506 - PlayBadminton.py - INFO: date:2023-02-18 selectable courts:
+('2299148', '场地10', '1', '09:00-10:00', '216697')
+('2299140', '场地2', '1', '09:00-10:00', '216697')
+('2299143', '场地5', '1', '09:00-10:00', '216697')
+('2299144', '场地6', '1', '09:00-10:00', '216697')
+('2299150', '场地2', '1', '10:01-11:00', '216698')
+2023-02-18 06:29:04,828 - PlayBadminton.py - INFO: date:2023-02-19 No court available.
+2023-02-18 06:29:05,135 - PlayBadminton.py - INFO: date:2023-02-20 No court available.
+2023-02-18 06:29:05,439 - PlayBadminton.py - INFO: date:2023-02-21 No court available.
+2023-02-18 06:29:05,741 - PlayBadminton.py - INFO: date:2023-02-22 No court available.
+2023-02-18 06:29:17,831 - thread.py - INFO: Finish loading user info.
+2023-02-18 06:29:17,833 - PlayBadminton.py - INFO: Random select UA header:Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6
+2023-02-18 06:29:25,041 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-18 14:29:25 CST+0800
+2023-02-18 06:29:25,839 - PlayBadminton.py - DEBUG: id=41 200
+2023-02-18 06:29:26,154 - PlayBadminton.py - INFO: date:2023-02-18 selectable courts:
+('2299148', '场地10', '1', '09:00-10:00', '216697')
+('2299140', '场地2', '1', '09:00-10:00', '216697')
+('2299143', '场地5', '1', '09:00-10:00', '216697')
+('2299144', '场地6', '1', '09:00-10:00', '216697')
+('2299150', '场地2', '1', '10:01-11:00', '216698')
+2023-02-18 06:29:26,463 - PlayBadminton.py - INFO: date:2023-02-19 No court available.
+2023-02-18 06:29:26,718 - PlayBadminton.py - INFO: date:2023-02-20 No court available.
+2023-02-18 06:29:27,015 - PlayBadminton.py - INFO: date:2023-02-21 No court available.
+2023-02-18 06:29:27,309 - PlayBadminton.py - INFO: date:2023-02-22 No court available.
+2023-02-18 06:29:27,309 - PlayBadminton.py - INFO: ['2299150', '场地2', '1', '10:01-11:00', '216698', '2023-02-18']
+2023-02-18 06:29:28,339 - PlayBadminton.py - DEBUG: {"backObject":null,"message":"已过有效期，请重新选择","object":null,"reason":null,"result":"0"}
+2023-02-18 06:29:28,339 - PlayBadminton.py - ERROR: Out of validity.
+2023-02-18 06:29:29,147 - PlayBadminton.py - DEBUG: {"backObject":null,"message":"已过有效期，请重新选择","object":null,"reason":null,"result":"0"}
+2023-02-18 06:29:29,147 - PlayBadminton.py - ERROR: Out of validity.
+2023-02-18 06:29:31,092 - PlayBadminton.py - DEBUG: {"backObject":null,"message":"已过有效期，请重新选择","object":null,"reason":null,"result":"0"}
+2023-02-18 06:29:31,092 - PlayBadminton.py - ERROR: Out of validity.
+2023-02-18 06:36:34,146 - PlayBadminton.py - INFO: Random select UA header:Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6
+2023-02-18 06:36:36,561 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-18 14:36:36 CST+0800
+2023-02-18 06:36:37,319 - PlayBadminton.py - DEBUG: id=42 200
+2023-02-18 06:36:37,644 - PlayBadminton.py - INFO: date:2023-02-18 selectable courts:
+('2263939', '场地1', '1', '09:00-10:00', '216037')
+('2263950', '场地12', '1', '09:00-10:00', '216037')
+('2263940', '场地2', '1', '09:00-10:00', '216037')
+('2263942', '场地4', '1', '09:00-10:00', '216037')
+('2263943', '场地5', '1', '09:00-10:00', '216037')
+('2263944', '场地6', '1', '09:00-10:00', '216037')
+('2263945', '场地7', '1', '09:00-10:00', '216037')
+('2263946', '场地8', '1', '09:00-10:00', '216037')
+('2263947', '场地9', '1', '09:00-10:00', '216037')
+2023-02-18 06:36:37,966 - PlayBadminton.py - INFO: date:2023-02-19 selectable courts:
+('2264059', '场地1', '1', '09:00-10:00', '216047')
+('2264065', '场地7', '1', '09:00-10:00', '216047')
+2023-02-18 06:36:38,264 - PlayBadminton.py - INFO: date:2023-02-20 No court available.
+2023-02-18 06:36:38,530 - PlayBadminton.py - INFO: date:2023-02-21 No court available.
+2023-02-18 06:36:38,864 - PlayBadminton.py - INFO: date:2023-02-22 No court available.
+2023-02-18 06:36:38,865 - PlayBadminton.py - INFO: No courts meet the requirement.
+023-02-18 06:29:17,831 - thread.py - INFO: Finish loading user info.
+2023-02-18 06:29:17,833 - PlayBadminton.py - INFO: Random select UA header:Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6
+2023-02-18 06:29:25,041 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-18 14:29:25 CST+0800
+2023-02-18 06:29:26,154 - PlayBadminton.py - INFO: date:2023-02-18 selectable courts:
+('2299148', '场地10', '1', '09:00-10:00', '216697')
+('2299140', '场地2', '1', '09:00-10:00', '216697')
+('2299143', '场地5', '1', '09:00-10:00', '216697')
+('2299144', '场地6', '1', '09:00-10:00', '216697')
+('2299150', '场地2', '1', '10:01-11:00', '216698')
+2023-02-18 06:29:26,463 - PlayBadminton.py - INFO: date:2023-02-19 No court available.
+2023-02-18 06:29:26,718 - PlayBadminton.py - INFO: date:2023-02-20 No court available.
+2023-02-18 06:29:27,015 - PlayBadminton.py - INFO: date:2023-02-21 No court available.
+2023-02-18 06:29:27,309 - PlayBadminton.py - INFO: date:2023-02-22 No court available.
+2023-02-18 06:29:27,309 - PlayBadminton.py - INFO: ['2299150', '场地2', '1', '10:01-11:00', '216698', '2023-02-18']
+2023-02-18 06:29:28,339 - PlayBadminton.py - ERROR: Out of validity.
+2023-02-18 06:29:29,147 - PlayBadminton.py - ERROR: Out of validity.
+2023-02-18 06:29:31,092 - PlayBadminton.py - ERROR: Out of validity.
+2023-02-18 06:38:49,340 - thread.py - INFO: Finish loading user info.
+2023-02-18 06:38:49,340 - PlayBadminton.py - INFO: Random select UA header:Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3
+2023-02-18 06:38:56,938 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-18 14:38:56 CST+0800
+2023-02-18 06:38:57,780 - PlayBadminton.py - DEBUG: id=41 200
+2023-02-18 06:38:58,102 - PlayBadminton.py - INFO: date:2023-02-18 selectable courts:
+('2299148', '场地10', '1', '09:00-10:00', '216697')
+('2299140', '场地2', '1', '09:00-10:00', '216697')
+('2299143', '场地5', '1', '09:00-10:00', '216697')
+('2299144', '场地6', '1', '09:00-10:00', '216697')
+('2299150', '场地2', '1', '10:01-11:00', '216698')
+2023-02-18 06:38:58,426 - PlayBadminton.py - INFO: date:2023-02-19 No court available.
+2023-02-18 06:38:58,730 - PlayBadminton.py - INFO: date:2023-02-20 No court available.
+2023-02-18 06:38:59,042 - PlayBadminton.py - INFO: date:2023-02-21 No court available.
+2023-02-18 06:38:59,308 - PlayBadminton.py - INFO: date:2023-02-22 No court available.
+2023-02-18 06:38:59,308 - PlayBadminton.py - INFO: ['2299148', '场地10', '1', '09:00-10:00', '216697', '2023-02-18']
+2023-02-18 06:39:00,339 - PlayBadminton.py - DEBUG: {"backObject":null,"message":"验证码有误！","object":null,"reason":null,"result":"100"}
+2023-02-18 06:39:01,139 - PlayBadminton.py - DEBUG: {"backObject":null,"message":"验证码有误！","object":null,"reason":null,"result":"100"}
+2023-02-18 06:39:03,161 - PlayBadminton.py - DEBUG: {"backObject":null,"message":"已过有效期，请重新选择","object":null,"reason":null,"result":"0"}
+2023-02-18 06:39:03,162 - PlayBadminton.py - ERROR: Auth code is out of validity.
+2023-02-18 06:39:09,054 - PlayBadminton.py - DEBUG: id=41 200
+2023-02-18 06:39:09,364 - PlayBadminton.py - INFO: date:2023-02-18 selectable courts:
+('2299148', '场地10', '1', '09:00-10:00', '216697')
+('2299140', '场地2', '1', '09:00-10:00', '216697')
+('2299143', '场地5', '1', '09:00-10:00', '216697')
+('2299144', '场地6', '1', '09:00-10:00', '216697')
+('2299150', '场地2', '1', '10:01-11:00', '216698')
+2023-02-18 06:39:09,672 - PlayBadminton.py - INFO: date:2023-02-19 No court available.
+2023-02-18 06:39:09,981 - PlayBadminton.py - INFO: date:2023-02-20 No court available.
+2023-02-18 06:39:10,281 - PlayBadminton.py - INFO: date:2023-02-21 No court available.
+2023-02-18 06:39:10,585 - PlayBadminton.py - INFO: date:2023-02-22 No court available.
+2023-02-18 06:39:10,585 - PlayBadminton.py - INFO: ['2299148', '场地10', '1', '09:00-10:00', '216697', '2023-02-18']
+2023-02-18 06:39:11,564 - PlayBadminton.py - DEBUG: {"backObject":null,"message":"已过有效期，请重新选择","object":null,"reason":null,"result":"0"}
+2023-02-18 06:39:11,564 - PlayBadminton.py - ERROR: Auth code is out of validity.
+2023-02-18 07:02:59,544 - thread.py - INFO: Finish loading user info.
+2023-02-18 07:02:59,546 - PlayBadminton.py - INFO: Random select UA header:Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3
+2023-02-18 07:02:59,547 - thread.py - INFO: Start registering for the thread 1.
+2023-02-19 00:34:05,788 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-19 08:34:05 CST+0800
+2023-02-19 00:34:06,554 - PlayBadminton.py - DEBUG: id=41 200
+2023-02-19 00:34:06,835 - PlayBadminton.py - INFO: date:2023-02-23 No court available.
+2023-02-19 00:34:08,467 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-19 08:34:08 CST+0800
+2023-02-19 00:34:09,002 - PlayBadminton.py - DEBUG: id=41 200
+2023-02-19 00:34:09,284 - PlayBadminton.py - INFO: date:2023-02-23 No court available.
+2023-02-19 00:34:10,940 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-19 08:34:10 CST+0800
+2023-02-19 00:34:11,458 - PlayBadminton.py - DEBUG: id=41 200
+2023-02-19 00:34:11,739 - PlayBadminton.py - INFO: date:2023-02-23 No court available.
+2023-02-19 00:34:13,356 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-19 08:34:13 CST+0800
+2023-02-19 00:34:14,122 - PlayBadminton.py - DEBUG: id=41 200
+2023-02-19 00:34:14,401 - PlayBadminton.py - INFO: date:2023-02-23 No court available.
+2023-02-19 00:34:16,027 - PlayBadminton.py - INFO: Welcome to the reservation system.2023-02-19 08:34:16 CST+0800
+2023-02-19 00:34:16,542 - PlayBadminton.py - DEBUG: id=41 200
+2023-02-19 00:34:16,850 - PlayBadminton.py - INFO: date:2023-02-23 No court available.
