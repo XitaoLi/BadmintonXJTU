@@ -146,12 +146,12 @@ class YiDongJiaoDa(object):
         if r.status_code==200:
             t = datetime.datetime.fromtimestamp(int(time.time()), tz).strftime('%Y-%m-%d %H:%M:%S %Z%z')
 
-            globalLogger.logger.info(f"Welcome to the reservation system.{t}")
+            globalLogger.logger.info(f"Now time: {t} Searching... ")
 
         #返回值为html，有可用信息
         url_BMT1 = 'http://202.117.17.144/product/show.html?id=' +self.platid
         r = self.session.get(url_BMT1)
-        globalLogger.logger.debug(f"id={self.platid} {r.status_code}")
+        # globalLogger.logger.debug(f"id={self.platid} {r.status_code}")
 
         #-----------------------------获取场地信息-------------------------------
         #五天的全部场地信息，用字典存储
@@ -360,13 +360,17 @@ def bmt_for_thread(ydjd:YiDongJiaoDa, userInfo,mode,thread_id,isEmail):
     '''
     if mode == 1:
         ydjd.login()
-        nowTime = datetime.datetime.fromtimestamp(int(time.time()), tz)
-        print(f"登录后的时间：{nowTime}")
-        # t = (datetime.datetime.now() + datetime.timedelta(seconds=5)).strftime('%H:%M:%S') 
-        targetTime = datetime.datetime.strptime("08:40:00","%H:%M:%S").replace(tzinfo=pytz.timezone('Asia/Shanghai')) #"08:40:00"
-        print(f"目标时间：{targetTime}")
-        seconds = (targetTime-nowTime).seconds
-        print(f"休眠时间：{seconds}s")
+        now_time = datetime.datetime.fromtimestamp(int(time.time()), tz)
+        globalLogger.logger.info(f"登录后的时间：{now_time}")
+        today = now_time.today()
+        if int(now_time.hour) >= 8:
+            target_day = today + datetime.timedelta(days=1)
+        else:
+            target_day = today
+        target_time = datetime.datetime(target_day.year,target_day.month,target_day.day,8,0,0,0,now_time.tzinfo)
+        globalLogger.logger.info(f"目标时间：{target_time}")
+        seconds = (target_time - now_time).seconds
+        globalLogger.logger.info(f"休眠时间：{seconds}s")
         time.sleep(seconds)
         circulation_num = 5
         plat_booked_num = 0

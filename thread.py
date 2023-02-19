@@ -18,7 +18,12 @@ def MainBook():
     isEmail = userInfo["isEmail"] #是否发送邮件
     date = userInfo["date"] # 格式为2023-2-19
     
-    start_time = "08:39:00" #08:40:00
+    start_time = datetime.datetime.strptime("08:29:00","%H:%M:%S") #08:40:00
+    tz = pytz.timezone('Asia/Shanghai')
+    for i in tz._tzinfos:
+        if i[2] == 'CST':
+            dt = i[0]
+    start_time_tz = (start_time - dt).strftime('%H:%M:%S') 
     # start_time = (datetime.datetime.now() + datetime.timedelta(seconds=2)).strftime('%H:%M:%S') 
     if mode == 1:
         sub_thread = []
@@ -29,14 +34,14 @@ def MainBook():
             # sub_thread.append( threading.Thread(target = bmt_for_thread,args=(ydjd2,userInfo,mode,str(i)+'-2')) )
             # sub_thread.append( threading.Thread(target = test) )
         schedule_break_flag = False
-        def schedule_thread():
-            global schedule_break_flag 
-            schedule_break_flag= True
+        def job_that_executes_once():
+            # globalLogger.logger.debug("hello Beijing Time")
             for i in range(0,1):
                 sub_thread[i].start()
                 sleep(10)   
-        schedule.every().day.at(start_time).do(schedule_thread)
-        while not schedule_break_flag:
+            return schedule.CancelJob
+        schedule.every().day.at(start_time_tz).do(job_that_executes_once)
+        while True:
             schedule.run_pending()
             sleep(1)
     else:

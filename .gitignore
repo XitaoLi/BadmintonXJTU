@@ -6,5 +6,5 @@ test/
 note.md
 docs/user_config.json
 *.jpg
-
+*.log
 .saz
