@@ -229,7 +229,7 @@ class YiDongJiaoDa(object):
                             res.append(date)
                             return res
                     else:
-                        if(plat[3][0:2] == stime ):
+                        if(plat[3][0:2] == stime):
                             res= list(plat)
                             res.append(date)
                             return res
@@ -247,7 +247,7 @@ class YiDongJiaoDa(object):
             return 0,'null','null'
         #--------------------------------------------------
         # self.login_again()
-        for i in range(0,3):
+        for i in range(0,10):
 
             # get figure
             url_yzm ="http://202.117.17.144:8080/gen"
@@ -265,9 +265,17 @@ class YiDongJiaoDa(object):
             with open("yzm/img/sliderImg.png",'wb') as f:
                 f.write(sldImg)
             
+            bg_shape = [response_json["captcha"]["backgroundImageWidth"] , response_json["captcha"]["backgroundImageHeight"]]
+            slider_shape = [response_json["captcha"]["sliderImageWidth"] , response_json["captcha"]["sliderImageHeight"]]
+            if bg_shape[1] != slider_shape[1]:
+                slider_shape[1] = bg_shape[1]
+            show_shape = (260,159)
+            k = show_shape[1]/bg_shape[1]
+            # show_shape = bg_shape
+            # k = 1
+            _yzm = build_post(show_shape,(round(slider_shape[0]*k),show_shape[1]),k)
             id = response_json["id"]
-            k = 260 / response_json["captcha"]["backgroundImageWidth"]  #260为手机屏幕显示像素
-            yzm = json.dumps(build_post(k)) + f"synjones{id}synjoneshttp://202.117.17.144:8071"
+            yzm = json.dumps(_yzm) + f"synjones{id}synjoneshttp://202.117.17.144:8071"
             url_tobook = 'http://202.117.17.144:8080/web/order/tobook.html'
             data = {
                 "param": json.dumps({
@@ -284,7 +292,10 @@ class YiDongJiaoDa(object):
             if r.status_code == '404':
                 globalLogger.logger.error('404 error')
             msg = json.loads(r.text)['message']
-            if msg == '验证码错误':
+            if 'message' not in r.text:
+                globalLogger.logger.info("r.text")
+                assert json.loads(r.text)['message'] , "请求有误，msg字段未知"
+            if msg == '验证码有误！':
                 globalLogger.logger.info("Retry slider auth code recognition.")
                 continue
                 
@@ -363,11 +374,12 @@ def bmt_for_thread(ydjd:YiDongJiaoDa, userInfo,mode,thread_id,isEmail):
         now_time = datetime.datetime.fromtimestamp(int(time.time()), tz)
         globalLogger.logger.info(f"登录后的时间：{now_time}")
         today = now_time.today()
-        if int(now_time.hour) >= 8:
-            target_day = today + datetime.timedelta(days=1)
-        else:
-            target_day = today
-        target_time = datetime.datetime(target_day.year,target_day.month,target_day.day,8,0,0,0,now_time.tzinfo)
+        # thread 控制在8：39传入，因此无需判断targetday
+        # if int(now_time.hour) >= 8:
+        #     target_day = today + datetime.timedelta(days=1)
+        # else:
+        target_day = today
+        target_time = datetime.datetime(target_day.year,target_day.month,target_day.day,8,40,0,0,now_time.tzinfo)
         globalLogger.logger.info(f"目标时间：{target_time}")
         seconds = (target_time - now_time).seconds
         globalLogger.logger.info(f"休眠时间：{seconds}s")
@@ -378,6 +390,7 @@ def bmt_for_thread(ydjd:YiDongJiaoDa, userInfo,mode,thread_id,isEmail):
             try:
                 ydjd.search(mode)
                 selectplat = ydjd.select(userInfo['priority'],mode)
+                globalLogger.logger.info("选择的场地是："+str(selectplat))
                 if selectplat:
                     ydjd.login_again()
                     status,id,sTime = ydjd.book(isEmail,selectplat,userInfo['emailConfig'],thread_id)
@@ -396,7 +409,7 @@ def bmt_for_thread(ydjd:YiDongJiaoDa, userInfo,mode,thread_id,isEmail):
         try:
             ydjd.search(mode)
             selectplat = ydjd.select(userInfo['priority'],mode)
-            globalLogger.logger.info(str(selectplat))
+            globalLogger.logger.info("选择的场地是：" + str(selectplat))
             if selectplat:
                 status,id,_a = ydjd.book(True,selectplat,userInfo['emailConfig'])
                 if status == 1:
@@ -431,10 +444,10 @@ if __name__ == '__main__':
     # print(selectplat)
     # id = ydjd.book(True,selectplat,userInfo['emailConfig'])
 
-    ydjd.platid = '42'
+    ydjd.platid = '41'
     ydjd.search(mode)
     selectplat = ydjd.select(userInfo['priority'],mode)
-    # print(selectplat)
+    print(selectplat)
     id = ydjd.book(True,selectplat,userInfo['emailConfig'])
     
 

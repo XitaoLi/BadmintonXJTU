@@ -4,7 +4,7 @@
 This project can reserve badminton venues in Xingqing Campus of XJTU, and provide two basic functions: global scanning and timing competition.
 
 ## 环境配置
-项目依赖库已打包好，执行`pip install -r requirements.txt`可快速添加依赖项
+项目依赖库已打包好，执行`pip3 install -r requirements.txt`可快速添加依赖项
 
 ## 参数设置
 所有参数集成在[user_config.json](docs/user_config.json)配置文件中，按以下格式填写帐密、查询密码、预约偏好等信息，此部分涉及敏感信息并未上传云端。

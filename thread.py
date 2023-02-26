@@ -18,7 +18,7 @@ def MainBook():
     isEmail = userInfo["isEmail"] #是否发送邮件
     date = userInfo["date"] # 格式为2023-2-19
     
-    start_time = datetime.datetime.strptime("08:29:00","%H:%M:%S") #08:40:00
+    start_time = datetime.datetime.strptime("08:39:00","%H:%M:%S") #08:40:00
     tz = pytz.timezone('Asia/Shanghai')
     for i in tz._tzinfos:
         if i[2] == 'CST':
